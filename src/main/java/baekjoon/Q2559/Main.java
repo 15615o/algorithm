@@ -1,4 +1,4 @@
-package Q2559;
+package baekjoon.Q2559;
 
 /*
     1. 아이디어

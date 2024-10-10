@@ -2,18 +2,24 @@ package baekjoon.Q15686;
 
 /*
     1. 아이디어
-    -
+    - 모든 치킨집 정보를 리스트에 저장
+    - 모든 건물 정보를 리스트에 저장
+    - 탐색해야할 치킨집 정보를 리스트에 저장(백트래킹) -> 이 때, 리스트의 삽입, 삭제 최소화
+    - 탐색해야할 치킨집 리스트의 길이가 M과 같을 때 최소 거리 탐색 수행
+    - 건물마다 치킨집 정보와 비교하여 가장 작은 값을 minDistance(초기값 max)에 저장.
+    - 한 건물의 minDistance 연산이 끝나면 totDistance에 합산
     2. 시간복잡도
-    - O(M*N^2) => 가능
+    - O((13CM)*2N*M) => O((13C(6, 7일 때 최대)))*2N*M) => 2000 * 100 * 13 = 2,600,000 => 가능
     3. 변수
     - int[][] map
     - ArrayList<int[]> chickenRestaurants
     - ArrayList<int[]> searchChickenRestaurants
+    - ArrayList<int[]> buildings
     - int res
  */
 
 import java.util.*;
-        import java.io.*;
+import java.io.*;
 
 public class Main {
     private static int M;
@@ -21,17 +27,17 @@ public class Main {
     private static int[][] map;
 
     private static int calculateDistance(ArrayList<int[]> buildings, ArrayList<int[]> searchChickenRestaurants){
-        int distance = 0;
+        int totDistance = 0;
 
         for(int[] building : buildings){
-            int min = Integer.MAX_VALUE;
+            int minDistance = Integer.MAX_VALUE;
             for(int[] searchChickenRestaurant : searchChickenRestaurants){
-                min = Math.min(min, Math.abs(building[0] - searchChickenRestaurant[0]) + Math.abs(building[1] - searchChickenRestaurant[1]));
+                minDistance = Math.min(minDistance, Math.abs(building[0] - searchChickenRestaurant[0]) + Math.abs(building[1] - searchChickenRestaurant[1]));
             }
-            distance += min;
+            totDistance += minDistance;
         }
 
-        return distance;
+        return totDistance;
     }
 
     private static int bt(ArrayList<int[]> chickenRestaurants, ArrayList<int[]> searchChickenRestaurants, ArrayList<int[]> buildings, int st, int res){

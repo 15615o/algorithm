@@ -22,8 +22,10 @@ public class Main {
         int n = Integer.parseInt(st.nextToken());
         int[] arr = new int[n];
         arr[0] = 1;
-        arr[1] = 2;
 
+        if(n > 1){
+            arr[1] = 2;
+        }
         if(n >= 3) { // n값이 3이상인 경우
             for(int i=2; i<n; i++){
                 arr[i] = (arr[i-1] + arr[i-2]) % 10007;
